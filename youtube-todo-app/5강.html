@@ -23,13 +23,43 @@
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <input type="text" @keyup="keyUp" />
+      <button @click="btnClick">더하기</button>
+
+      <div :class="[dropdown,toggle]">
+        <ul>
+          <li><a href="#">메뉴1</a></li>
+          <li><a href="#">메뉴2</a></li>
+        </ul>
+      </div>
+    </div>
 
     <script>
       const app = new Vue({
         el: '#app',
-        data: {},
-        methods: {},
+        data: {
+          counter: 0,
+          id: 1,
+          style: {
+            background: 'red',
+          },
+          fontStyle: {
+            fontSize: '10px',
+          },
+          dropdown: 'dropdown',
+          toggle: {
+            on: true,
+          },
+        },
+        methods: {
+          btnClick() {
+            this.toggle.on = !this.toggle.on;
+          },
+          keyUp({ keyCode }) {
+            console.log(keyCode === 13 ? '엔터키 눌림' : '엔터키 아님');
+          },
+        },
       });
     </script>
   </body>
