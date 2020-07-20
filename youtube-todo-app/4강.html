@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+      .dropdown ul {
+        display: none;
+        list-style: none;
+        margin: 0;
+        border: 1px solid black;
+        padding: 10px;
+        width: 200px;
+      }
+
+      .dropdown.on ul {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <img :id="`thumbnail_${id}`" :src="image" alt="" /> -->
+
+      <div :class="[dropdown,toggle]">
+        <ul>
+          <li><a href="#">메뉴1</a></li>
+          <li><a href="#">메뉴2</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          image: 'https://picsum.photos/200/200/?image=353',
+          id: 1,
+          style: {
+            background: 'red',
+          },
+          fontStyle: {
+            fontSize: '10px',
+          },
+          dropdown: 'dropdown',
+          toggle: {
+            on: true,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul style="list-style:none;">
+        <template v-for="item in items">
+          <li >
+            <img :src="item.image"></script>
+          </li>
+          <li>
+            {{item.title}}
+          </li>
+        </template>
+      </ul>
+    </div>
+
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          items: [
+            {
+              id: 1,
+              image: 'https://picsum.photos/210/118/?image1',
+              title : '컴퓨터'
+            },
+            {
+              id: 2,
+              image: 'https://picsum.photos/210/118/?image100',
+              title : '노트북'
+            },
+            {
+              id: 3,
+              image: 'https://picsum.photos/210/118/?image200',
+              title : '휴대폰'
+            },
+            {
+              id: 4,
+              image: 'https://picsum.photos/210/118/?image300',
+              title : '모니터'
+            },
+            {
+              id: 5,
+              image: 'https://picsum.photos/210/118/?image400',
+              title : '스피커'
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
