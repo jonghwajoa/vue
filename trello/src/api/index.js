@@ -29,3 +29,12 @@ export const board = {
     return request("get", "/boards");
   }
 };
+
+export const login = {
+  fetch() {
+    return request("post", "/login", {
+      email: "test@test.com",
+      password: "123123"
+    });
+  }
+};
