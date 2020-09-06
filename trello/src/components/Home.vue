@@ -4,23 +4,29 @@
     <div v-if="loading">loading..</div>
 
     <div v-else>
-      API Result : {{ apiResult }}
-      <ul>
-        <li>
-          <router-link to="/b/1">board 1</router-link>
-        </li>
-        <li>
-          <router-link to="/b/2">board 2</router-link>
-        </li>
-        <li>
-          <router-link to="/b/3">board 3</router-link>
-        </li>
-      </ul>
+      API Result :
+      <pre>{{ apiResult }}</pre>
     </div>
+    <div v-if="err">
+      <pre>{{ err }}</pre>
+    </div>
+    <ul>
+      <li>
+        <router-link to="/b/1">board 1</router-link>
+      </li>
+      <li>
+        <router-link to="/b/2">board 2</router-link>
+      </li>
+      <li>
+        <router-link to="/b/3">board 3</router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -36,18 +42,17 @@ export default {
     fetchData() {
       this.loading = true;
 
-      const req = new XMLHttpRequest();
-      req.open("GET", "http://localhost:3000/health", true);
-      req.send();
-
-      req.addEventListener("load", () => {
-        this.loading = false;
-        this.apiResult = {
-          status: req.status,
-          statusText: req.statusText,
-          response: JSON.parse(req.response)
-        };
-      });
+      axios
+        .get("http://localhost:3000/_health")
+        .then(res => {
+          this.apiResult = res.data;
+        })
+        .catch(err => {
+          this.err = err.response.data;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 };
