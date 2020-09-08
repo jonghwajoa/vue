@@ -18,10 +18,16 @@ const request = (method, url, data) => {
       const { status } = err.response;
 
       if (status === UNAUTHORIZED) {
-        return onUnauthrorized();
+        onUnauthrorized();
       }
-      throw Error(err);
+      throw err.response.data.error;
     });
+};
+
+export const setAuthInHeader = token => {
+  axios.defaults.headers.common["Authorization"] = token
+    ? `Bearer ${token}`
+    : null;
 };
 
 export const board = {
@@ -30,11 +36,8 @@ export const board = {
   }
 };
 
-export const login = {
-  fetch() {
-    return request("post", "/login", {
-      email: "test@test.com",
-      password: "123123"
-    });
+export const auth = {
+  login(email, password) {
+    return request("post", "/login", { email, password });
   }
 };
