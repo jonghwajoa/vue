@@ -3,8 +3,8 @@ import router from "../router";
 
 const DOMAIN = "http://localhost:3000";
 const UNAUTHORIZED = 401;
-const onUnauthrorized = () => {
-  router.push("/login");
+const onUnauthorized = () => {
+  router.push(`/login?rPath=${encodeURIComponent(location.pathname)}`);
 };
 
 const request = (method, url, data) => {
@@ -14,13 +14,10 @@ const request = (method, url, data) => {
     data
   })
     .then(result => result.data)
-    .catch(err => {
-      const { status } = err.response;
-
-      if (status === UNAUTHORIZED) {
-        onUnauthrorized();
-      }
-      throw err.response.data.error;
+    .catch(result => {
+      const { status } = result.response;
+      if (status === UNAUTHORIZED) onUnauthorized();
+      throw result.response;
     });
 };
 
@@ -30,12 +27,14 @@ export const setAuthInHeader = token => {
     : null;
 };
 
+const { token } = localStorage;
+if (token) setAuthInHeader(token);
+
 export const board = {
   fetch() {
     return request("get", "/boards");
   }
 };
-
 export const auth = {
   login(email, password) {
     return request("post", "/login", { email, password });

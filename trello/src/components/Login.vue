@@ -19,18 +19,17 @@
       </div>
       <button
         class="btn"
-        :class="{ 'btn-success': !invalidForm }"
+        :class="{'btn-success': !invalidForm}"
         type="submit"
         :disabled="invalidForm"
       >Log In</button>
     </form>
-    <p class="error" v-if="error">{{ error }}</p>
+    <p class="error" v-if="error">{{error}}</p>
   </div>
 </template>
 
 <script>
 import { auth, setAuthInHeader } from "../api";
-
 export default {
   data() {
     return {
@@ -52,13 +51,13 @@ export default {
     onSubmit() {
       auth
         .login(this.email, this.password)
-        .then((result) => {
-          localStorage.setItem("token", result.accessToken);
-          setAuthInHeader(result.accessToken);
+        .then((data) => {
+          localStorage.setItem("token", data.accessToken);
+          setAuthInHeader(data.accessToken);
           this.$router.push(this.rPath);
         })
         .catch((err) => {
-          this.error = err;
+          this.error = err.data.error;
         });
     },
   },
